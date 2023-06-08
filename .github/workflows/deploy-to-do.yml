@@ -1,0 +1,25 @@
+name: Deploy
+
+on:
+  workflow_run:
+    workflows: ["Unit test"]
+    branches:
+      - 'master'
+    types: [completed]
+
+jobs:
+  on-success:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success'}}
+    steps:
+      - name: Deploying a new version
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: |
+            cd ci-cd-projeto-teste
+            git pull
+            npm ci
+            pm2 reload index.js
+          host: ${{ secrets.SSH_HOST }}
+          username: root
+          password: ${{ secrets.SSH_PASSWD}}

@@ -1,0 +1,24 @@
+name: Unit test
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: use node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      - run: npm ci
+      - run: npm test
+      - name: Jest Annotations & Coverage
+        uses: mattallty/jest-github-action@v1.0.3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
