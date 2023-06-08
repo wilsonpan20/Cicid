@@ -1,6 +1,6 @@
 const uuid = require('uuid').v4
 
-const home = (req, res) => res.send('CI/CD Project')
+const home = (req, res) => res.send('CI/CD Project-type')
 const page1 = (req, res) => res.send('Page1')
 const page2 = (req, res) => res.send('Page2')
 const page3 = (req, res) => res.send('Page3')
